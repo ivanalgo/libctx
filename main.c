@@ -10,8 +10,9 @@ static void *
 func(void *arg)
 {
 	//long idx = (long)arg;
+	int counter = 0;
 
-	while(1) {
+	while(counter++ < 10000000) {
 		//printf("func idx = %d\n", idx);
 		co_yield();
 	}

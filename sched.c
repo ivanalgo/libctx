@@ -1,6 +1,8 @@
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "sched.h"
+#include "task.h"
 
 struct list task_list;
 task_t *current = NULL;
@@ -20,16 +22,18 @@ void scheduler(void)
 	static int counter = 0;
 	task_t *next;
        	task_t *prev = current;
-	task_t _main;
 
-	if (prev == NULL) {
-		prev = &_main;
+	if (list_empty(&task_list)) {
+		printf("not task to sched, exiting...\n");
+		exit(1);
 	}
-
 	next = list_entry(list_pop(&task_list), task_t, list);
 	current = next;
 	counter++;
-	swapcontext(&prev->context, &next->context);
+	if (!prev || prev->flags != TASK_RUNNING)
+		setcontext(&next->context);
+	else
+		swapcontext(&prev->context, &next->context);
 }
 
 
