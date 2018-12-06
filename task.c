@@ -1,9 +1,9 @@
-#include <ucontext.h>
 #include <stdlib.h>
 
 #include "list.h"
 #include "task.h"
 #include "sched.h"
+#include "context.h"
 
 void co_task_func(task_t *task)
 {

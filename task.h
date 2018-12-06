@@ -1,8 +1,7 @@
 #ifndef _TASK_H_
 #define _TASK_H_
 
-#include <ucontext.h>
-
+#include "context.h"
 #include "list.h"
 
 typedef struct {

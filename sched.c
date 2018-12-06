@@ -29,6 +29,10 @@ void scheduler(void)
 	}
 	next = list_entry(list_pop(&task_list), task_t, list);
 	current = next;
+
+	if (next == prev)
+		return;
+
 	counter++;
 	if (!prev || prev->flags != TASK_RUNNING)
 		setcontext(&next->context);

@@ -1,10 +1,9 @@
-#include <ucontext.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <signal.h>
 
 #include "task.h"
 #include "sched.h"
+#include "context.h"
 
 static void *
 func(void *arg)
@@ -13,22 +12,16 @@ func(void *arg)
 	int counter = 0;
 
 	while(counter++ < 10000000) {
-		//printf("func idx = %d\n", idx);
+		//printf("func idx = %ld\n", idx);
 		co_yield();
 	}
 
 	return NULL;
 }
 
-void sig(int sig)
-{
-	exit(1);
-}
-
 int
 main(int argc, char *argv[])
 {
-	signal(SIGINT, sig);
       	sched_init(); 
 
 	co_create(func, (void *)1);
