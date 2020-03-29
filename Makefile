@@ -1,7 +1,8 @@
 CC = gcc
-CFLAGS = -Wall -Werror -g -O2
+#CFLAGS = -Wall -Werror -g -DDEBUG
+CFLAGS = -Wall -Werror -g
 
-SHOBJS=task.o sched.o makecontext.o
+SHOBJS=task.o sched.o makecontext.o pthread.o lock.o
 EXAMPLES=main
 LIB=liblwt.so
 

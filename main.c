@@ -1,36 +1,38 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "task.h"
-#include "sched.h"
-#include "context.h"
+#include <pthread.h>
 
 static void *
 func(void *arg)
 {
-	//long idx = (long)arg;
+	long idx = (long)arg;
 	int counter = 0;
 
-	while(counter++ < 10000000) {
-		//printf("func idx = %ld\n", idx);
-		co_yield();
+	while(counter++ < 10) {
+		pthread_yield();
 	}
 
+	printf (" thread id %ld exit...\n", idx);
 	return NULL;
 }
+
+#define NUM 10000
 
 int
 main(int argc, char *argv[])
 {
-      	sched_init(); 
+	int i;
+	pthread_t th[NUM];
 
-	co_create(func, (void *)1);
-	co_create(func, (void *)2);
-	co_create(func, (void *)3);
-	co_create(func, (void *)4);
-	co_create(func, (void *)5);
+	for (i = 0; i < NUM; i++) {
+		pthread_create(th + i, NULL, func, (void *)(long)i);
+	}
 
-	scheduler();
+	for (i = 0; i < NUM; i++) {
+		pthread_join(th[i], NULL);
+	}
 
 	return 0;
 }

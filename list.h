@@ -41,6 +41,9 @@ static inline struct list * list_pop(struct list *head)
 {
 	struct list *node = head->next;
 
+	if (list_empty(head))
+		return NULL;
+
 	list_del(node);
 
 	return node;
