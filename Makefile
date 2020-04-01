@@ -1,24 +1,25 @@
 CC = gcc
 #CFLAGS = -Wall -Werror -g -DDEBUG
-CFLAGS = -Wall -Werror -g
+CFLAGS = -Wall -Werror -g -Iinclude
+APP_CFLAGS = -Wall -Werror -g
 
-SHOBJS=task.o sched.o makecontext.o pthread.o lock.o
+SHOBJS=core/task.o core/sched.o core/makecontext.o posix/pthread.o posix/lock.o
 EXAMPLES=main
 LIB=liblwt.so
 
 all: $(LIB) $(EXAMPLES)
 
-$(LIB): $(SHOBJS) context.o
-	$(CC) $(LDFLAGS) -shared -o $(LIB) $(SHOBJS) context.o
+$(LIB): $(SHOBJS) core/context.o
+	$(CC) $(LDFLAGS) -shared -o $(LIB) $(SHOBJS) core/context.o
 
 $(SHOBJS):%.o:%.c
 	$(CC) $(CFLAGS) -c -fPIC -shared -o $@ $<
 
-context.o:context.S
+core/context.o: core/context.S
 	$(CC) $(CFLAGS) -c -o $@ $<
 
 $(EXAMPLES):%:%.c
-	$(CC) $(CFLAGS) $(LDFALGS) -o $@ $< -llwt -Wl,--rpath=$(PWD) -L$(PWD)
+	$(CC) $(APP_CFLAGS) $(LDFALGS) -o $@ $< -llwt -Wl,--rpath=$(PWD) -L$(PWD)
 
 clean:
-	rm -rf $(SHOBJS) $(LIB) $(EXAMPLES) context.o
+	rm -rf $(SHOBJS) $(LIB) $(EXAMPLES) core/context.o
