@@ -57,5 +57,19 @@ static inline struct list * list_pop(struct list *head)
 #define list_entry(ptr, type, member)				\
 	container_of(ptr, type, member)
 
+#define list_for_each(node, head)	\
+	for (node = head->next; node != head; node = node->next)
+
+static inline int list_counter(struct list *head)
+{
+	int counter = 0;
+	struct list *node;
+
+	list_for_each(node, head) {
+		counter++;
+	}
+
+	return counter;
+}
 
 #endif /* _LIST_H_ */

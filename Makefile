@@ -3,7 +3,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -g -Iinclude
 APP_CFLAGS = -Wall -Werror -g
 
-SHOBJS=core/task.o core/sched.o core/makecontext.o posix/pthread.o posix/lock.o
+SHOBJS=core/task.o core/sched.o core/makecontext.o posix/pthread.o core/lock.o posix/mutex.o
 EXAMPLES=main
 LIB=liblwt.so
 
