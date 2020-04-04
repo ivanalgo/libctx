@@ -10,7 +10,7 @@ void dummy(void)
 }
 
 void
-makecontext (ucontext_t *ucp, void (*func) (void), int argc, ...)
+lwt_makecontext (lcontext_t *ucp, void (*func) (void), int argc, ...)
 {
   uintptr_t *sp;
   unsigned int rbp;

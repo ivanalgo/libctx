@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "list.h"
 #include "lock.h"
-#include "task.h"
+#include "sched.h"
 
 void co_mutex_init(mutex_t*mutex)
 {

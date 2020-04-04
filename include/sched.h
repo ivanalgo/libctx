@@ -8,6 +8,6 @@ extern void create_new_task(task_t *task);
 extern void sched_init(void);
 extern void task_exit(task_t *task);
 
-extern task_t *current;
+extern __thread task_t *current;
 
 #endif /* _SCHED_H_ */

@@ -8,8 +8,9 @@
 typedef struct {
 	void * (*func)(void *arg);
 	void *arg;
-	ucontext_t context;
+	lcontext_t context;
 	int flags;
+	int cpu;
 
 	/* for task exited */
 	notify_t exit_notify;
@@ -19,7 +20,6 @@ typedef struct {
 	struct list list;
 } task_t;
 
-extern task_t *current;
 #define TASK_RUNNING 	0x00
 #define TASK_EXIT	0x01
 #define TASK_SLEEP	0x02

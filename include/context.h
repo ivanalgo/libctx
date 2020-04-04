@@ -31,7 +31,7 @@ struct stack {
 	size_t ss_size;
 };
 
-typedef struct ucontext {
+typedef struct lcontext {
 	unsigned long rax;
 	unsigned long rbx;
 	unsigned long rcx;
@@ -51,12 +51,12 @@ typedef struct ucontext {
 	unsigned long rip;
 
 	struct stack uc_stack;
-} ucontext_t;
+} lcontext_t;
 
-extern int getcontext(ucontext_t *ucp);
-extern int setcontext(const ucontext_t *ucp);
-extern void makecontext(ucontext_t *ucp, void (*func)(), int argc, ...);
-extern int swapcontext(ucontext_t *oucp, const ucontext_t *ucp);
+extern int lwt_getcontext(lcontext_t *ucp);
+extern int lwt_setcontext(const lcontext_t *ucp);
+extern void lwt_makecontext(lcontext_t *ucp, void (*func)(), int argc, ...);
+extern int lwt_swapcontext(lcontext_t *oucp, const lcontext_t *ucp);
 
 #endif /* _CONTEXT_H_ */
 

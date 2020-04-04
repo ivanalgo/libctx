@@ -13,9 +13,9 @@
 #define _ASAMBLE_
 #include "context.h"
 
-.global swapcontext
-.type swapcontext, @function
-swapcontext:
+.global lwt_swapcontext
+.type lwt_swapcontext, @function
+lwt_swapcontext:
 	/* Save the preserved registers, the registers used for passing args,
 	   and the return address.  */
 	movq	%rbx, oRBX(%rdi)
@@ -50,7 +50,7 @@ swapcontext:
 	movq	oR15(%rdx), %r15
 
 	/* The following ret should return to the address set with
-	getcontext.  Therefore push the address on the stack.  */
+	lwt_getcontext.  Therefore push the address on the stack.  */
 	movq	oRIP(%rdx), %rcx
 	pushq	%rcx
 
@@ -68,10 +68,10 @@ swapcontext:
 	xorl	%eax, %eax
 	ret
 
-.global getcontext
-.type getcontext, @function
+.global lwt_getcontext
+.type lwt_getcontext, @function
 
-getcontext:
+lwt_getcontext:
 	/* Save the preserved registers, the registers used for passing
 	   args, and the return address.  */
 	movq	%rbx, oRBX(%rdi)
@@ -97,9 +97,9 @@ getcontext:
 	xorl	%eax, %eax
 	ret
 
-.global setcontext
-.type setcontext, @function
-setcontext:
+.global lwt_setcontext
+.type lwt_setcontext, @function
+lwt_setcontext:
 	/* Load the new stack pointer, the preserved registers and
 	   registers used for passing args.  */
 
@@ -112,7 +112,7 @@ setcontext:
 	movq	oR15(%rdi), %r15
 
 	/* The following ret should return to the address set with
-	getcontext.  Therefore push the address on the stack.  */
+	lwt_getcontext.  Therefore push the address on the stack.  */
 	movq	oRIP(%rdi), %rcx
 	pushq	%rcx
 

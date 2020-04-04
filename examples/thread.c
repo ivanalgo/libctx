@@ -34,5 +34,6 @@ main(int argc, char *argv[])
 		pthread_join(th[i], NULL);
 	}
 
+	printf("main return\n");
 	return 0;
 }

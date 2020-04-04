@@ -31,14 +31,14 @@ task_t *co_create(void * (*fn)(void *arg), void *arg)
 		return (task_t *)-1;
 	}
 
-	getcontext(&task->context);
+	lwt_getcontext(&task->context);
 	task->context.uc_stack.ss_sp = stack;
 	task->context.uc_stack.ss_size = TASK_STACK_SIZE;
 	task->func = fn;
 	task->arg = arg;
 	task->flags = TASK_RUNNING;
 	co_notify_init(&task->exit_notify);
-	makecontext(&task->context, (void (*)(void))co_task_func, 1, task);
+	lwt_makecontext(&task->context, (void (*)(void))co_task_func, 1, task);
 
 	create_new_task(task);
 
