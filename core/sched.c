@@ -40,12 +40,14 @@ void raw_functions_init()
 void create_new_task(task_t *task)
 {
 	debug_log("new task: %p\n", task);
+	spin_lock(&task_list_lock);
 	list_add(&task_list, &task->list);
+	spin_unlock(&task_list_lock);
 }
 
-#define VCPU_NUM	3
-pthread_t vcpu[VCPU_NUM + 1];
-task_t idle[VCPU_NUM + 1];
+#define VCPU_NUM	2
+pthread_t vcpu[VCPU_NUM];
+task_t idle[VCPU_NUM];
 
 void * vcpu_idle(void *arg)
 {
@@ -75,7 +77,7 @@ void vcpu_idle0()
 {
 	int i;
 
-	for (i = 1; i <= VCPU_NUM; i++) {
+	for (i = 1; i < VCPU_NUM; i++) {
 		p_pthread_create(vcpu + i, NULL, vcpu_idle, (void *)(long)i);
 	}
 
