@@ -38,9 +38,10 @@ void co_mutex_unlock(mutex_t *mutex)
 	assert(mutex->value == -1);
 	if (!list_empty(&mutex->waiter)) {
 		task = list_entry(list_pop(&mutex->waiter), task_t, list);
+	} else {
+		mutex->value = 1;
 	}
 
-	mutex->value = 1;
 	spin_unlock(&mutex->spin_lock);
 
 	if (task)

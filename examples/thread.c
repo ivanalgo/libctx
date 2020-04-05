@@ -7,18 +7,18 @@
 static void *
 func(void *arg)
 {
-	long idx = (long)arg;
+	//long idx = (long)arg;
 	int counter = 0;
 
 	while(counter++ < 10) {
 		pthread_yield();
 	}
 
-	printf (" thread id %ld exit...\n", idx);
+	//printf (" thread id %ld exit...\n", idx);
 	return NULL;
 }
 
-#define NUM 10000
+#define NUM 100000
 
 int
 main(int argc, char *argv[])

@@ -192,5 +192,7 @@ void co_wakeup(task_t *t)
 {
 	debug_log("wakeup: %p\n", t);
 	t->flags = TASK_RUNNING;
+	spin_lock(&task_list_lock);
 	list_add(&task_list, &t->list);
+	spin_unlock(&task_list_lock);
 }
